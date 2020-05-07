@@ -5,11 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server",
-    "dev": "nodemon server"
+    "server": "nodemon server",
+    "client": "yarn --cwd client start",
+    "clientinstall": "yarn --cwd client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "vattila",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.3"
   },
   "dependencies": {

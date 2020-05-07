@@ -65,6 +65,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
+}
+
 // Error handler middleware
 app.use(errorHandler);
 
