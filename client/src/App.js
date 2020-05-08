@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Fragment} from 'react';
+import { Login, Home, } from './components/pages';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './theme';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import PrivateRoute from './components/routing/PrivateRoute';
+import { Message } from './components/common';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redux/store';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme} >
+      <Provider store={store}>
+        <Router>
+          <PersistGate persistor={persistor}>
+            <Fragment>
+              <Switch>
+                <Route exact path='/login' component={Login} />
+                <PrivateRoute exact path="/" component={Home} />
+              </Switch>
+            </Fragment>
+          </PersistGate>
+        </Router>
+        <Message />
+      </Provider>
+    </ThemeProvider>
   );
 }
 

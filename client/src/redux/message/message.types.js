@@ -1,0 +1,7 @@
+export const MessageActionTypes = {
+    ADD_MESSAGE: 'ADD_MESSAGE',
+    CLEAR_MESSAGE: 'CLEAR_MESSAGE',
+    TYPE_ERROR: 'TYPE_ERROR',
+    TYPE_SUCCESS: 'TYPE_SUCCESS',
+    TYPE_WARNING: 'TYPE_WARNING',
+}
