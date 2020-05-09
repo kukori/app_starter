@@ -7,17 +7,21 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
     root: {
+        display: 'flex',
+        height: '100vh',
         background: theme.palette.background.default,
-        height: '100vh'
     },
     paper: {
+        marginTop: 150,
         padding: theme.spacing(4),
     },
     loginTitle: {
-        margin: '8px 0 24px 0'
+        marginTop: 8,
+        marginBottom: 24
     },
     input: {
-        margin: '10px 0 10px 0'
+        marginTop: 10,
+        marginBottom: 10
     },
     loginButton: {
         marginBottom: 16,
