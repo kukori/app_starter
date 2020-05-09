@@ -7,7 +7,8 @@ import messageReducer from './message/message.reducer';
 const persistConfig = {
     key: 'root',
     storage: storage,
-    whitelist: ['user']
+    whitelist: []
+    //whitelist: ['user']
 }
 
 const rootReducer = combineReducers({

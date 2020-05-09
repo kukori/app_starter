@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {useEffect} from 'react';
 import { Login, Home, } from './components/pages';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
@@ -7,20 +7,24 @@ import { Provider } from 'react-redux';
 import PrivateRoute from './components/routing/PrivateRoute';
 import { Message } from './components/common';
 import { PersistGate } from 'redux-persist/integration/react';
+import { loadUser } from './redux/user/user.actions';
 import { store, persistor } from './redux/store';
 
 const App = () => {
+
+  useEffect(() => {
+    store.dispatch(loadUser());
+  });
+
   return (
     <ThemeProvider theme={theme} >
       <Provider store={store}>
         <Router>
           <PersistGate persistor={persistor}>
-            <Fragment>
-              <Switch>
-                <Route exact path='/login' component={Login} />
-                <PrivateRoute exact path="/" component={Home} />
-              </Switch>
-            </Fragment>
+            <Switch>
+              <Route exact path='/login' component={Login} />
+              <PrivateRoute exact path="/" component={Home} />
+            </Switch>
           </PersistGate>
         </Router>
         <Message />

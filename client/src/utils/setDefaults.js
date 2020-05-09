@@ -5,9 +5,9 @@ const setDefaults = (token) => {
         axios.defaults.baseURL = 'http://localhost:5000';
     }
     if(token) {
-        axios.defaults.headers.common['x-auth-token'] = token;
+        axios.defaults.headers.common['authorization'] = token;
     } else {
-        delete  axios.defaults.headers.common['x-auth-token'];
+        delete  axios.defaults.headers.common['authorization'];
     }
     axios.defaults.headers.common['Content-Type'] = 'application/json';
 }
