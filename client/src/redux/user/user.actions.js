@@ -19,10 +19,10 @@ export const loadUser = () => async dispatch => {
         payload: response.data
     });
   } catch (error) {
-      dispatch(saveMessage(error.message));
-      dispatch({
-          type: UserActionTypes.LOGIN_FAIL
-      });
+    dispatch(saveMessage(error.message));
+    dispatch({
+        type: UserActionTypes.LOGIN_FAIL
+    });
   }
 };
 
@@ -48,11 +48,11 @@ export const login = (email, password) => async dispatch => {
         payload: payload
     });
   } catch (error) {
-      console.log(error);
-      dispatch(saveMessage(error.message));
-      dispatch({
-          type: UserActionTypes.LOGIN_FAIL
-      });
+    console.log(error);
+    dispatch(saveMessage(error.message));
+    dispatch({
+        type: UserActionTypes.LOGIN_FAIL
+    });
   }
 };
 
@@ -67,10 +67,23 @@ export const logout = () => async dispatch => {
         payload: response.data
     });
   } catch (error) {
-      dispatch(saveMessage(error.message));
-      dispatch({
-          type: UserActionTypes.LOGOUT_SUCCESS
-      });
+    dispatch(saveMessage(error.message));
+    dispatch({
+        type: UserActionTypes.LOGOUT_SUCCESS
+    });
+  }
+};
+
+// Forgot password forgotPassword
+export const forgotPassword = (email) => async dispatch => {
+  try {
+    setDefaults();
+    const response = await axios.post('/api/v1/auth/forgotPassword', {"email": email});
+
+    return response.data.success;
+  } catch (error) {
+    console.log(error);
+    dispatch(saveMessage(error.message));
   }
 };
 
