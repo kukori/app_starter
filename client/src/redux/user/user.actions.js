@@ -57,15 +57,26 @@ export const login = (email, password) => async dispatch => {
 };
 
 // Logout User
-export const logout = () => dispatch => {
-  dispatch({
-    type: UserActionTypes.LOGOUT_SUCCESS
-  });
+export const logout = () => async dispatch => {
+  try {
+    setDefaults(localStorage.token);
+    const response = await axios.get('/api/v1/auth/logout');
+
+    dispatch({
+        type: UserActionTypes.LOGOUT_SUCCESS,
+        payload: response.data
+    });
+  } catch (error) {
+      dispatch(saveMessage(error.message));
+      dispatch({
+          type: UserActionTypes.LOGOUT_SUCCESS
+      });
+  }
 };
 
 // Set loading to true
 export const setLoading = () => {
   return {
-      type: UserActionTypes.USER_LOADING
+    type: UserActionTypes.USER_LOADING
   };
 };
