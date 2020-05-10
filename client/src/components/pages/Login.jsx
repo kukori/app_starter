@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: 10
     },
     loginButton: {
+        marginTop: 10,
         marginBottom: 16,
         height: 50
     }
