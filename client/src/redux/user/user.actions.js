@@ -74,13 +74,28 @@ export const logout = () => async dispatch => {
   }
 };
 
-// Forgot password forgotPassword
+// Forgot password
 export const forgotPassword = (email) => async dispatch => {
   try {
     setDefaults();
     const response = await axios.post('/api/v1/auth/forgotPassword', {"email": email});
 
     return response.data.success;
+  } catch (error) {
+    console.log(error);
+    dispatch(saveMessage(error.message));
+  }
+};
+
+// Reset forgotten password
+export const resetPassword = (resetToken, password) => async dispatch => {
+  try {
+    setDefaults();
+    const response = await axios.put(`/api/v1/auth/resetpassword/${resetToken}`, {"password": password});
+
+    if(response.data.success) {
+      dispatch(saveMessage('Password changed successfully!', 'TYPE_SUCCESS'));
+    }
   } catch (error) {
     console.log(error);
     dispatch(saveMessage(error.message));
