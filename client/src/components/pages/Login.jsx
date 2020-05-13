@@ -43,9 +43,9 @@ const Login = ({isAuthenticated, isLoading, login, location}) => {
     if(isAuthenticated && !isLoading) {
         if(location.state && location.state.from) {
             return <Redirect to={location.state.from} />
-         } else {
+        } else {
             return <Redirect to='/' />
-         }
+        }
     }
 
     return (

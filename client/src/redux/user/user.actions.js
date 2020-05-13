@@ -102,6 +102,26 @@ export const resetPassword = (resetToken, password) => async dispatch => {
   }
 };
 
+export const register = (name, email, password, role = 'user') => async dispatch => {
+  try {
+    setDefaults();
+    const response = await axios.post('/api/v1/auth/register', {"name": name, "email": email, "password": password, "role": role});
+
+    const payload = {
+      "email": email,
+      "token": 'Bearer ' + response.data.token
+    };
+
+    dispatch({
+        type: UserActionTypes.LOGIN_SUCCESS,
+        payload: payload
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch(saveMessage(error.message));
+  }
+};
+
 // Set loading to true
 export const setLoading = () => {
   return {
