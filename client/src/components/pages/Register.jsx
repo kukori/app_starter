@@ -50,12 +50,9 @@ const Register = ({isAuthenticated, isLoading, register}) => {
         <div className={classes.root}>
             <Container maxWidth="sm">
                 <Paper className={classes.paper}>
-                    <Formik
-                        render={props => <RegisterForm {...props} />}
-                        initialValues={values}
-                        validationSchema={validationSchema}
-                        onSubmit={formSubmit}
-                    />
+                    <Formik initialValues={values} validationSchema={validationSchema} onSubmit={formSubmit} >
+                        {(props) => <RegisterForm {...props} />}
+                    </Formik>
                 </Paper>
             </Container>
         </div>

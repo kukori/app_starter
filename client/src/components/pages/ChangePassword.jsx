@@ -1,10 +1,9 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { resetPassword } from '../../redux/user/user.actions';
+import { updatePassword } from '../../redux/user/user.actions';
 import { Container, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import ResetPasswordForm from './reset_password/ResetPasswordForm';
+import ChangePasswordForm from './change_password/ChangePasswordForm';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -20,23 +19,23 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ResetPassword = ({resetPassword}) => {
+const ChangePassword = ({updatePassword}) => {
     const classes = useStyles();
-    let {resetToken} = useParams();
-    const values = {confirmPassword: "", password: "" };
+    const values = { newPassword: "", confirmPassword: "", password: "" };
 
     const validationSchema = Yup.object({
         password: Yup.string("")
+            .required("Enter your old password"),
+        newPassword: Yup.string("")
             .min(8, "Password must contain atleast 8 characters")
-            .required("Enter your password"),
+            .required("Enter your new password"),
         confirmPassword: Yup.string("Enter your password")
-            .required("Confirm your password")
-            .oneOf([Yup.ref("password")], "Password does not match")
+            .required("Confirm your new password")
+            .oneOf([Yup.ref("newPassword")], "Password does not match")
     });
 
     const formSubmit = (data) => {
-        console.log(data);
-        resetPassword(resetToken, data.password);
+        updatePassword(data.password, data.newPassword);
     }
 
     return (
@@ -44,7 +43,7 @@ const ResetPassword = ({resetPassword}) => {
             <Container maxWidth="sm">
                 <Paper className={classes.paper}>
                     <Formik initialValues={values} validationSchema={validationSchema} onSubmit={formSubmit} >
-                        {(props) => <ResetPasswordForm {...props} />}
+                        {(props) => <ChangePasswordForm {...props} />}
                     </Formik>
                 </Paper>
             </Container>
@@ -52,4 +51,4 @@ const ResetPassword = ({resetPassword}) => {
     )
 }
 
-export default connect(null, {resetPassword})(ResetPassword);
+export default connect(null, {updatePassword})(ChangePassword);

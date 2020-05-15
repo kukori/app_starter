@@ -16,7 +16,7 @@ export const loadUser = () => async dispatch => {
 
     dispatch({
         type: UserActionTypes.USER_LOADED,
-        payload: response.data
+        payload: response.data.data
     });
   } catch (error) {
     dispatch(saveMessage(error.message));
@@ -102,6 +102,27 @@ export const resetPassword = (resetToken, password) => async dispatch => {
   }
 };
 
+// Update user password
+export const updatePassword = (currentPassword, newPassword) => async dispatch => {
+  try {
+    setDefaults(localStorage.token);
+    const response = await axios.put('/api/v1/auth/updatepassword', {"currentPassword": currentPassword, "newPassword": newPassword});
+
+    if(response.data.success) {
+      dispatch(saveMessage('Password changed successfully!', 'TYPE_SUCCESS'));
+    }
+
+    dispatch({
+      type: UserActionTypes.PASSWORD_CHANGE_SUCCESS,
+      payload: {"token": 'Bearer ' + response.data.token}
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch(saveMessage(error.message));
+  }
+};
+
+// Register user
 export const register = (name, email, password, role = 'user') => async dispatch => {
   try {
     setDefaults();
@@ -113,8 +134,8 @@ export const register = (name, email, password, role = 'user') => async dispatch
     };
 
     dispatch({
-        type: UserActionTypes.LOGIN_SUCCESS,
-        payload: payload
+      type: UserActionTypes.LOGIN_SUCCESS,
+      payload: payload
     });
   } catch (error) {
     console.log(error);

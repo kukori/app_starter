@@ -29,6 +29,13 @@ const userReducer = (state = initialState, action) => {
                 isLoading: false,
                 user: action.payload.email
             };
+        case UserActionTypes.PASSWORD_CHANGE_SUCCESS:
+            localStorage.setItem('token', action.payload.token);
+            return {
+                ...state,
+                isAuthenticated: true,
+                isLoading: false
+            };
         case UserActionTypes.AUTH_ERROR:
         case UserActionTypes.LOGIN_FAIL:
         case UserActionTypes.LOGOUT_SUCCESS:

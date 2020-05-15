@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Login, Home, ForgotPassword, ResetPassword, Register } from './components/pages';
+import { Login, Home, ForgotPassword, ResetPassword, Register, ChangePassword } from './components/pages';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -27,6 +27,7 @@ const App = () => {
               <Route exact path='/reset-password/:resetToken' component={ResetPassword} />
               <Route exact path='/register' component={Register} />
               <PrivateRoute exact path="/" component={Home} />
+              <PrivateRoute exact path="/change-password" component={ChangePassword} />
             </Switch>
           </PersistGate>
         </Router>

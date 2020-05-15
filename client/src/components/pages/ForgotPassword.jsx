@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ForgotPassword = ({}) => {
+const ForgotPassword = () => {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [messageSent, setMessageSent] = useState(false);
