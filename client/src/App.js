@@ -12,29 +12,29 @@ import { store, persistor } from './redux/store';
 
 const App = () => {
 
-  useEffect(() => {
-    store.dispatch(loadUser());
-  });
+    useEffect(() => {
+        store.dispatch(loadUser());
+    });
 
-  return (
-    <ThemeProvider theme={theme} >
-      <Provider store={store}>
-        <Router>
-          <PersistGate persistor={persistor}>
-            <Switch>
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/forgot-password' component={ForgotPassword} />
-              <Route exact path='/reset-password/:resetToken' component={ResetPassword} />
-              <Route exact path='/register' component={Register} />
-              <PrivateRoute exact path="/" component={Home} />
-              <PrivateRoute exact path="/change-password" component={ChangePassword} />
-            </Switch>
-          </PersistGate>
-        </Router>
-        <Message />
-      </Provider>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme} >
+            <Provider store={store}>
+                <Router>
+                    <PersistGate persistor={persistor}>
+                        <Switch>
+                            <Route exact path='/login' component={Login} />
+                            <Route exact path='/forgot-password' component={ForgotPassword} />
+                            <Route exact path='/reset-password/:resetToken' component={ResetPassword} />
+                            <Route exact path='/register' component={Register} />
+                            <PrivateRoute exact path="/" component={Home} />
+                            <PrivateRoute exact path="/change-password" component={ChangePassword} />
+                        </Switch>
+                    </PersistGate>
+                </Router>
+                <Message />
+            </Provider>
+        </ThemeProvider>
+    );
 }
 
 export default App;

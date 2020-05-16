@@ -20,11 +20,11 @@ const Message = ({message: {message, messageType}, clearMessage}) => {
     useEffect(() => {
         if(message) {
             setOpen(true);
-            // eslint-disable-next-line
             setTimeout(() => {clearMessage()}, 5000);
         } else {
             setOpen(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [message]);
 
     const getSeverity = () => {

@@ -5,147 +5,147 @@ import setDefaults from '../../utils/setDefaults';
 
 // Check token & load user
 export const loadUser = () => async dispatch => {
-  try {
-    if(!localStorage.token) {
-      return;
+    try {
+        if(!localStorage.token) {
+            return;
+        }
+
+        dispatch(setLoading());
+        setDefaults(localStorage.token);
+        const response = await axios.get('/api/v1/auth/current');
+
+        dispatch({
+            type: UserActionTypes.USER_LOADED,
+            payload: response.data.data
+        });
+    } catch (error) {
+        dispatch(saveMessage(error.message));
+        dispatch({
+            type: UserActionTypes.LOGIN_FAIL
+        });
     }
-
-    dispatch(setLoading());
-    setDefaults(localStorage.token);
-    const response = await axios.get('/api/v1/auth/current');
-
-    dispatch({
-        type: UserActionTypes.USER_LOADED,
-        payload: response.data.data
-    });
-  } catch (error) {
-    dispatch(saveMessage(error.message));
-    dispatch({
-        type: UserActionTypes.LOGIN_FAIL
-    });
-  }
 };
 
 // Login User
 export const login = (email, password) => async dispatch => {
-  try {
-    dispatch(setLoading());
-    setDefaults();
+    try {
+        dispatch(setLoading());
+        setDefaults();
 
-    const response = await axios.post('/api/v1/auth/login', {"email": email, "password": password});
+        const response = await axios.post('/api/v1/auth/login', {"email": email, "password": password});
 
-    if(!response.data.success && response.data.error) {
-      throw new Error(response.data.error);
+        if(!response.data.success && response.data.error) {
+            throw new Error(response.data.error);
+        }
+
+        const payload = {
+            "email": email,
+            "token": 'Bearer ' + response.data.token
+        };
+
+        dispatch({
+            type: UserActionTypes.LOGIN_SUCCESS,
+            payload: payload
+        });
+    } catch (error) {
+        console.log(error);
+        dispatch(saveMessage(error.message));
+        dispatch({
+            type: UserActionTypes.LOGIN_FAIL
+        });
     }
-
-    const payload = {
-      "email": email,
-      "token": 'Bearer ' + response.data.token
-    };
-
-    dispatch({
-        type: UserActionTypes.LOGIN_SUCCESS,
-        payload: payload
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch(saveMessage(error.message));
-    dispatch({
-        type: UserActionTypes.LOGIN_FAIL
-    });
-  }
 };
 
 // Logout User
 export const logout = () => async dispatch => {
-  try {
-    setDefaults(localStorage.token);
-    const response = await axios.get('/api/v1/auth/logout');
+    try {
+        setDefaults(localStorage.token);
+        const response = await axios.get('/api/v1/auth/logout');
 
-    dispatch({
-        type: UserActionTypes.LOGOUT_SUCCESS,
-        payload: response.data
-    });
-  } catch (error) {
-    dispatch(saveMessage(error.message));
-    dispatch({
-        type: UserActionTypes.LOGOUT_SUCCESS
-    });
-  }
+        dispatch({
+            type: UserActionTypes.LOGOUT_SUCCESS,
+            payload: response.data
+        });
+    } catch (error) {
+        dispatch(saveMessage(error.message));
+        dispatch({
+            type: UserActionTypes.LOGOUT_SUCCESS
+        });
+    }
 };
 
 // Forgot password
 export const forgotPassword = (email) => async dispatch => {
-  try {
-    setDefaults();
-    const response = await axios.post('/api/v1/auth/forgotPassword', {"email": email});
+    try {
+        setDefaults();
+        const response = await axios.post('/api/v1/auth/forgotPassword', {"email": email});
 
-    return response.data.success;
-  } catch (error) {
-    console.log(error);
-    dispatch(saveMessage(error.message));
-  }
+        return response.data.success;
+    } catch (error) {
+        console.log(error);
+        dispatch(saveMessage(error.message));
+    }
 };
 
 // Reset forgotten password
 export const resetPassword = (resetToken, password) => async dispatch => {
-  try {
-    setDefaults();
-    const response = await axios.put(`/api/v1/auth/resetpassword/${resetToken}`, {"password": password});
+    try {
+        setDefaults();
+        const response = await axios.put(`/api/v1/auth/resetpassword/${resetToken}`, {"password": password});
 
-    if(response.data.success) {
-      dispatch(saveMessage('Password changed successfully!', 'TYPE_SUCCESS'));
+        if(response.data.success) {
+            dispatch(saveMessage('Password changed successfully!', 'TYPE_SUCCESS'));
+        }
+    } catch (error) {
+        console.log(error);
+        dispatch(saveMessage(error.message));
     }
-  } catch (error) {
-    console.log(error);
-    dispatch(saveMessage(error.message));
-  }
 };
 
 // Update user password
 export const updatePassword = (currentPassword, newPassword) => async dispatch => {
-  try {
-    setDefaults(localStorage.token);
-    const response = await axios.put('/api/v1/auth/updatepassword', {"currentPassword": currentPassword, "newPassword": newPassword});
+    try {
+        setDefaults(localStorage.token);
+        const response = await axios.put('/api/v1/auth/updatepassword', {"currentPassword": currentPassword, "newPassword": newPassword});
 
-    if(response.data.success) {
-      dispatch(saveMessage('Password changed successfully!', 'TYPE_SUCCESS'));
+        if(response.data.success) {
+            dispatch(saveMessage('Password changed successfully!', 'TYPE_SUCCESS'));
+        }
+
+        dispatch({
+            type: UserActionTypes.PASSWORD_CHANGE_SUCCESS,
+            payload: {"token": 'Bearer ' + response.data.token}
+        });
+    } catch (error) {
+        console.log(error);
+        dispatch(saveMessage(error.message));
     }
-
-    dispatch({
-      type: UserActionTypes.PASSWORD_CHANGE_SUCCESS,
-      payload: {"token": 'Bearer ' + response.data.token}
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch(saveMessage(error.message));
-  }
 };
 
 // Register user
 export const register = (name, email, password, role = 'user') => async dispatch => {
-  try {
-    setDefaults();
-    const response = await axios.post('/api/v1/auth/register', {"name": name, "email": email, "password": password, "role": role});
+    try {
+        setDefaults();
+        const response = await axios.post('/api/v1/auth/register', {"name": name, "email": email, "password": password, "role": role});
 
-    const payload = {
-      "email": email,
-      "token": 'Bearer ' + response.data.token
-    };
+        const payload = {
+            "email": email,
+            "token": 'Bearer ' + response.data.token
+        };
 
-    dispatch({
-      type: UserActionTypes.LOGIN_SUCCESS,
-      payload: payload
-    });
-  } catch (error) {
-    console.log(error);
-    dispatch(saveMessage(error.message));
-  }
+        dispatch({
+            type: UserActionTypes.LOGIN_SUCCESS,
+            payload: payload
+        });
+    } catch (error) {
+        console.log(error);
+        dispatch(saveMessage(error.message));
+    }
 };
 
 // Set loading to true
 export const setLoading = () => {
-  return {
-    type: UserActionTypes.USER_LOADING
-  };
+    return {
+        type: UserActionTypes.USER_LOADING
+    };
 };

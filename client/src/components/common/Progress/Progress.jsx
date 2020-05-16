@@ -5,7 +5,7 @@ import { LinearProgress } from '@material-ui/core';
 const Progress = ({productsLoading, categoriesLoading}) => {
     return (
         <div>
-        { (productsLoading || categoriesLoading) && <LinearProgress color="primary" />}
+            { (productsLoading || categoriesLoading) && <LinearProgress color="primary" />}
         </div>
     )
 }

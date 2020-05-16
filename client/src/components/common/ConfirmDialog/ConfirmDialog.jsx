@@ -1,12 +1,9 @@
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-
 
 export default function ConfirmDialog(props) {
 
     const { handleCancel, handleAccept, open, title = "Confirm", message = "Are you sure?", okText = "Ok", cancelText = "Cancel" } = props
-    const theme = useTheme();
 
     return (
         <Dialog
@@ -27,4 +24,3 @@ export default function ConfirmDialog(props) {
         </Dialog>
     )
 }
-
