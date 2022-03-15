@@ -1,26 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updatePassword } from '../../redux/user/user.actions';
-import { Container, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Container, Paper } from '@mui/material';
 import ChangePasswordForm from './change_password/ChangePasswordForm';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        height: '100vh',
-        background: theme.palette.background.default,
-    },
-    paper: {
-        marginTop: 150,
-        padding: theme.spacing(4),
-    }
-}));
-
 const ChangePassword = ({updatePassword}) => {
-    const classes = useStyles();
     const values = { newPassword: "", confirmPassword: "", password: "" };
 
     const validationSchema = Yup.object({
@@ -39,9 +25,9 @@ const ChangePassword = ({updatePassword}) => {
     }
 
     return (
-        <div className={classes.root}>
+        <div>
             <Container maxWidth="sm">
-                <Paper className={classes.paper}>
+                <Paper>
                     <Formik initialValues={values} validationSchema={validationSchema} onSubmit={formSubmit} >
                         {(props) => <ChangePasswordForm {...props} />}
                     </Formik>

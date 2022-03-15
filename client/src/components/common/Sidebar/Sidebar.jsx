@@ -1,45 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleSidebar } from '../../../redux/site/site.actions';
-import { makeStyles } from '@material-ui/core/styles';
-import { Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    drawerContainer: {
-        marginTop: 60,
-        overflow: 'auto',
-    },
-}));
+import { Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Mail, Inbox } from '@mui/icons-material';
 
 const Sidebar = ({sidebarOpen, toggleSidebar, variant = 'permanent'}) => {
-    const classes = useStyles();
-
     return (
         <Drawer
-            className={classes.drawer}
             variant={variant}
             open={sidebarOpen}
             onClose={toggleSidebar}
-            classes={{
-                paper: classes.drawerPaper,
-            }}
         >
-            <div className={classes.drawerContainer}>
+            <div >
                 <List>
                     {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemIcon>{index % 2 === 0 ? <Inbox/> : <Mail/>}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
                     ))}
@@ -48,7 +24,7 @@ const Sidebar = ({sidebarOpen, toggleSidebar, variant = 'permanent'}) => {
                 <List>
                     {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                        <ListItemIcon>{index % 2 === 0 ? <Inbox/> : <Mail/>}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
                     ))}

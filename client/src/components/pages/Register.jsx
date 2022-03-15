@@ -2,26 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { register } from '../../redux/user/user.actions';
-import { Container, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Container, Paper } from '@mui/material';
 import RegisterForm from './register/RegisterForm';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        height: '100vh',
-        background: theme.palette.background.default,
-    },
-    paper: {
-        marginTop: 150,
-        padding: theme.spacing(4),
-    }
-}));
-
 const Register = ({isAuthenticated, isLoading, register}) => {
-    const classes = useStyles();
     const values = {confirmPassword: "", password: "" };
 
     const validationSchema = Yup.object({
@@ -47,9 +33,9 @@ const Register = ({isAuthenticated, isLoading, register}) => {
     }
 
     return (
-        <div className={classes.root}>
+        <div>
             <Container maxWidth="sm">
-                <Paper className={classes.paper}>
+                <Paper >
                     <Formik initialValues={values} validationSchema={validationSchema} onSubmit={formSubmit} >
                         {(props) => <RegisterForm {...props} />}
                     </Formik>

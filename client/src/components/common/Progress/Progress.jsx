@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress } from '@mui/material';
 
 const Progress = ({productsLoading, categoriesLoading}) => {
     return (

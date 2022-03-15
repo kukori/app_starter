@@ -2,26 +2,12 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { resetPassword } from '../../redux/user/user.actions';
-import { Container, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Container, Paper } from '@mui/material';
 import ResetPasswordForm from './reset_password/ResetPasswordForm';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        height: '100vh',
-        background: theme.palette.background.default,
-    },
-    paper: {
-        marginTop: 150,
-        padding: theme.spacing(4),
-    }
-}));
-
 const ResetPassword = ({resetPassword}) => {
-    const classes = useStyles();
     let {resetToken} = useParams();
     const values = {confirmPassword: "", password: "" };
 
@@ -40,9 +26,9 @@ const ResetPassword = ({resetPassword}) => {
     }
 
     return (
-        <div className={classes.root}>
+        <div>
             <Container maxWidth="sm">
-                <Paper className={classes.paper}>
+                <Paper>
                     <Formik initialValues={values} validationSchema={validationSchema} onSubmit={formSubmit} >
                         {(props) => <ResetPasswordForm {...props} />}
                     </Formik>

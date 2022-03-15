@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { IconButton, Snackbar } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { IconButton, Snackbar, Alert, AlertTitle } from '@mui/material';
+import { Close } from '@mui/icons-material';
 import { clearMessage } from '../../../redux/message/message.actions'
 import { MessageActionTypes } from '../../../redux/message/message.types'
 
-const useStyles = makeStyles(theme => ({
-    title: {
-        color: theme.palette.white,
-    },
-}));
-
 const Message = ({message: {message, messageType}, clearMessage}) => {
-    const classes = useStyles();
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -65,10 +56,10 @@ const Message = ({message: {message, messageType}, clearMessage}) => {
                                 setOpen(false);
                             }}
                         >
-                        <CloseIcon fontSize="inherit" />
+                        <Close fontSize="inherit" />
                         </IconButton>
                     }
-                ><AlertTitle className={classes.title}>{getTitle()}</AlertTitle>
+                ><AlertTitle>{getTitle()}</AlertTitle>
                     {message ? message : ''}
                 </Alert>
             </Snackbar>
